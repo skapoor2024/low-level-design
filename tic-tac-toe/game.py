@@ -1,8 +1,6 @@
 from pydantic import BaseModel, Field, field_validator
 from typing import List
 from board import Board
-
-# from player import Player
 from move import Move
 
 
@@ -52,6 +50,7 @@ class Game(BaseModel):
             self.switch_player()
             return True
         else:
+            print("Invalid move, Please try again")
             return False
 
     def print_board(self):
@@ -64,10 +63,10 @@ class Game(BaseModel):
 
             try:
                 row = int(
-                    input(f"Enter row: between 0 and {self.board.board_size - 1}")
+                    input(f"Enter row: between 0 and {self.board.board_size - 1} ")
                 )
                 col = int(
-                    input(f"Enter col: between 0 and {self.board.board_size - 1}")
+                    input(f"Enter col: between 0 and {self.board.board_size - 1} ")
                 )
                 move = Move(
                     row=row, col=col, player=self.current_player, board=self.board
