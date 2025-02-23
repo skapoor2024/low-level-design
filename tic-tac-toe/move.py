@@ -1,5 +1,6 @@
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, field_validator
 from board import Board
+
 
 class Move(BaseModel):
     row: int
@@ -32,17 +33,21 @@ class Move(BaseModel):
     def check_occupied(cls, col, values):
         board = values.get("board")
         row = values.get("row")
-        if board and row is not None and board.grid[row][col] != '_': #Check if row and board exists
+        if (
+            board and row is not None and board.grid[row][col] != "_"
+        ):  # Check if row and board exists
             raise ValueError("That space is already occupied!")
         return col
 
     def __str__(self):
-        return f'Player {self.player} moved to ({self.row},{self.col})'
+        return f"Player {self.player} moved to ({self.row},{self.col})"
 
     def __repr__(self):
         return self.__str__()
 
     def __eq__(self, other):
-        return self.row == other.row and self.col == other.col and self.player == other.player
-    
-    
+        return (
+            self.row == other.row
+            and self.col == other.col
+            and self.player == other.player
+        )
